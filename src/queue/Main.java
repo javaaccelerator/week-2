@@ -7,5 +7,7 @@ public class Main {
         queue.add("task3");
         queue.add("task4");
         queue.display();
+        queue.remove();
+        queue.display();
     }
 }

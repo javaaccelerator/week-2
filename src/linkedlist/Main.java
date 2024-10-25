@@ -9,6 +9,7 @@ public class Main {
         names.add(4);
         names.displayData();
         names.insert(3,5);
+        names.displayData();
         System.out.println(names.search(1));
     }
 }

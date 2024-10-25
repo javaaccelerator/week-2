@@ -1,7 +1,7 @@
 package stack;
 
 
-class Stack {
+public class Stack {
     private Node top;
 
     public Stack() {

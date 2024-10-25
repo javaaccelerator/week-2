@@ -1,4 +1,4 @@
-package searching;
+package linearsearch;
 
 public class LinearSearch {
     public int search(int[] array, int target){
@@ -10,3 +10,5 @@ public class LinearSearch {
         return -1;
     }
 }
+
+//O(n)

@@ -10,7 +10,6 @@ public class SelectionSort {
                     minIndex = j;
                 }
             }
-            // Swap the minimum element found with the first element of the unsorted part
             int temp = array[minIndex];
             array[minIndex] = array[i];
             array[i] = temp;

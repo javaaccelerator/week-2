@@ -1,21 +1,36 @@
 package stack;
 
 public class Calculator {
-    Stack stack = new Stack();
-    public int resolve (Stack stack) {
-        int result = 0;
+    public static float resolve (Stack stack) {
+        Float result = 0F;
         while(true) {
-            Node start = stack.pop();
-            Node next = stack.pop();
-            Node nextNext = stack.pop();
-            result += solve(start,next);
-            try{
-
-            }catch (Exception e) {}
+            try {
+                Node operand1 = stack.pop();
+                Node operator = stack.pop();
+                Node operand2 = stack.pop();
+                result = 0F;
+                result = operate(operator, operand1, operand2);
+                stack.push(String.valueOf(result));
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                break;
+            }
         }
+        return result;
     }
 
-    public int solve(Node top, Node next) {
-        return 0;
+    public static float operate(Node operator,Node operand1, Node operand2) {
+        switch (operator.data) {
+            case "+":
+                return Float.parseFloat(operand1.data) + Float.parseFloat(operand2.data);
+            case "-":
+                return Float.parseFloat(operand1.data) - Float.parseFloat(operand2.data);
+            case "*":
+                return Float.parseFloat(operand1.data) * Float.parseFloat(operand2.data);
+            case "/":
+                return Float.parseFloat(operand1.data) / Float.parseFloat(operand2.data);
+            default:
+                throw new UnsupportedOperationException("Operator not supported");
+        }
     }
 }

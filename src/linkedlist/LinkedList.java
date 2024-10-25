@@ -9,7 +9,6 @@ public class LinkedList {
         this.size = size;
     }
 
-    //throw right error
     public void add(int data) {
         Node newData = new Node(data);
         if(this.head.getNext() == null) {
@@ -32,7 +31,10 @@ public class LinkedList {
     }
 
     public void insert(int index, int data) {
-        if(index == 0) {
+        if(index < 0) {
+            throw new IllegalArgumentException("Index can not be negative");
+        }
+        else if(index == 0) {
             Node tempNode = head;
             head = new Node(data);
             head.setNext(tempNode);
@@ -67,7 +69,7 @@ public class LinkedList {
             }
             node = node.getNext();
         }
-        throw new RuntimeException("name wasnt found");
+        throw new RuntimeException("integer wasn't found");
     }
 
     public void delete (int index) {
