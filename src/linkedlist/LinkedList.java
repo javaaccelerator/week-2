@@ -1,95 +1,108 @@
 package linkedlist;
 
 public class LinkedList {
-    Node head;
-    int size;
+    private Node head;
+    private int size;
 
-    public LinkedList(Node head, int size) {
+    public LinkedList() {
+        this.head = null;
+        this.size = 0;
+    }
+
+    public LinkedList(Node head) {
         this.head = head;
-        this.size = size;
+        this.size = calculateSize(); // Safety measure
+    }
+
+    private int calculateSize() {
+        int count = 0;
+        Node current = head;
+        while(current != null) {
+            count++;
+            current = current.getNext();
+        }
+        return count;
     }
 
     public void add(int data) {
-        Node newData = new Node(data);
-        if(this.head.getNext() == null) {
-            this.head.setNext(newData);
+        Node newNode = new Node(data);
+        if(head == null) {
+            head = newNode;
+        } else {
+            Node last = get(size - 1);
+            last.setNext(newNode);
         }
-        else {
-            Node tempNode = head;
-            for(int i = 0; i < size ; i ++)  {
-                try {
-                    Node currentNode = tempNode.getNext();
-                    if(currentNode != null) {
-                        tempNode = currentNode;
-                    }
-                } catch (Exception e) {
-                    break;
-                }
-            }
-            tempNode.setNext(newData);
-        }
+        size++;
     }
 
     public void insert(int index, int data) {
-        if(index < 0) {
-            throw new IllegalArgumentException("Index can not be negative");
+        if(index < 0 || index > size) {
+            throw new IndexOutOfBoundsException("Invalid index: " + index);
         }
-        else if(index == 0) {
-            Node tempNode = head;
-            head = new Node(data);
-            head.setNext(tempNode);
+
+        Node newNode = new Node(data);
+
+        if(index == 0) {
+            newNode.setNext(head);
+            head = newNode;
+        } else {
+            Node prev = get(index - 1);
+            newNode.setNext(prev.getNext());
+            prev.setNext(newNode);
         }
-        else if(index + 1 == size){
-            Node tempNode = get(index-1);
-            tempNode.setNext(new Node(data));
-        }
-        else{
-            Node beforeNode = get(index-1);
-            Node nodeToDelete = beforeNode.getNext();
-            beforeNode.setNext(nodeToDelete.getNext());
-        }
+        size++;
     }
 
     public Node get(int index) {
-        Node node = this.head;
-        for(int i = 0; i < size ; i ++)  {
-            if(i == index) {
-                break;
-            }
-            node = node.getNext();
+        if(index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("Invalid index: " + index);
         }
-        return node;
+
+        Node current = head;
+        for(int i = 0; i < index; i++) {
+            current = current.getNext();
+        }
+        return current;
     }
 
-    public int search(int integer) {
-        Node node = this.head;
-        for(int i = 0; i < size ; i ++)  {
-            if(integer == node.getData()) {
-                return i;
+    public int search(int target) {
+        Node current = head;
+        int index = 0;
+        while(current != null) {
+            if(current.getData() == target) {
+                return index;
             }
-            node = node.getNext();
+            current = current.getNext();
+            index++;
         }
-        throw new RuntimeException("integer wasn't found");
+        throw new RuntimeException("Value not found: " + target);
     }
 
-    public void delete (int index) {
+    public void delete(int index) {
+        if(index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("Invalid index: " + index);
+        }
+
         if(index == 0) {
             head = head.getNext();
-        }
-        else if(index + 1 == size){
-            Node tempNode = get(index-1);
-            tempNode.removeNext();
         } else {
-            Node beforeNode = get(index-1);
-            Node nodeToDelete = beforeNode.getNext();
-            beforeNode.setNext(nodeToDelete.getNext());
+            Node prev = get(index - 1);
+            Node toDelete = prev.getNext();
+            prev.setNext(toDelete.getNext());
         }
+        size--;
     }
-    public void displayData () {
-        Node displayNode = this.head;
-        for(int i = 0; i < size; i ++)  {
-            System.out.println(displayNode.getData());
-            displayNode = displayNode.getNext();
+
+    public void displayData() {
+        Node current = head;
+        while(current != null) {
+            System.out.print(current.getData() + " -> ");
+            current = current.getNext();
         }
+        System.out.println("NULL");
+    }
+
+    public int size() {
+        return size;
     }
 }
